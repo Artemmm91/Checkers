@@ -3,9 +3,9 @@
 #include <string>
 #include <unistd.h>
 
-#define try_read(value, predicat)                                       \
+#define try_read(value, predicate)                                       \
     std::cin >> value;                                                  \
-    while(predicat) {                                                   \
+    while(predicate) {                                                   \
         std::cout << "Ответ не в дипозоне значений. Введите еще раз\n"; \
         std::cin >> value;                                              \
     }
@@ -26,7 +26,7 @@ void Game::Start() {
     std::cout << "Привет!\n Это бот для игры в русские шашки.\n" <<
                  "Белые ходят первыми. Выберите цвет (black/white):\n";
     std::string color;
-    try_read(color, color != "black" && color != "white");
+    try_read(color, color != "black" && color != "white")
     bool is_bot_white = color == "black";
     bot_.SetPlayer(is_bot_white);
     state_.SetPlayer(true); // ход белых первый
@@ -34,7 +34,7 @@ void Game::Start() {
 
     std::cout << "Выбери сложность от 1 до 10: P.S.(чем выше тем дольше боту нужно думать)\n";
     int32_t difficulty;
-    try_read(difficulty, difficulty > 10 || difficulty < 0);
+    try_read(difficulty, difficulty > 10 || difficulty < 0)
     bot_.SetDepth(difficulty);
 
     std::cout << "Начинаем!\n";
@@ -53,10 +53,12 @@ void Game::End() {
 }
 
 void Game::PlayerTurn() {
-    sleep(10);
+    std::cout << "Ваш ход!\n";
+    std::string
 }
 
 void Game::BotTurn() {
+    std::cout << "Мой ход!\n";
     auto moves = bot_.FindMove(state_);
     if (moves.size() < 2) {
         std::cout << "Что-то пошло не так!!!\n";
@@ -75,10 +77,8 @@ void Game::MainGame() {
     while (!state_.isEnd()) {
         state_.PrintBoard();
         if (is_bot_turn_) {
-            std::cout << "Мой ход!\n";
             BotTurn();
         } else {
-            std::cout << "Ваш ход!\n";
             PlayerTurn();
         }
         is_bot_turn_ = !is_bot_turn_;
