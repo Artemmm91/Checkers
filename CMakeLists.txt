@@ -3,4 +3,5 @@ project(Checkers)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Checkers main.cpp)
+add_subdirectory(source)
+add_subdirectory(play)
