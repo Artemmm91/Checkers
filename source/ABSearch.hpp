@@ -1,12 +1,9 @@
-#pragma once
+#ifndef CHECKERS_ABSEARCH_HPP
+#define CHECKERS_ABSEARCH_HPP
+
 #include "Table.hpp"
 #include <chrono>
 
-int64_t elapsed_time(std::chrono::time_point<std::chrono::high_resolution_clock> start) {
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
-    return 10;
-}
 
 class ABSearch {
 private:
@@ -33,3 +30,4 @@ public:
     std::vector<Vector2D> FindMove(const GameState& state);
 };
 
+#endif //CHECKERS_ABSEARCH_HPP

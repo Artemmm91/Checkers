@@ -1,5 +1,4 @@
-#pragma once
-#include "ABSeach.hpp"
+#include "ABSearch.hpp"
 
 int32_t ABSearch::evaluateFunction(const GameState& state) {
     int32_t white_score = 0;
@@ -63,7 +62,9 @@ int32_t ABSearch::alphaBetaSearch(const GameState& state, int32_t alpha, int32_t
             return -INF;
         }
     }
-    if (depth <= 0 or elapsed_time(start_search_time_) > MAX_TIME) {
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(stop - start_search_time_);
+    if (depth <= 0 or elapsed.count() > MAX_TIME) {
         return evaluateFunction(state);
     }
 
@@ -77,8 +78,9 @@ std::vector<Vector2D> ABSearch::FindMove(const GameState& state) {
     start_search_time_ = std::chrono::high_resolution_clock::now();
 
     std::vector<Vector2D> best_move{};
-
-    if (elapsed_time(start_search_time_) > MAX_TIME) {
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(stop - start_search_time_);
+    if (elapsed.count() > MAX_TIME) {
         return best_move;
     }
     auto val = -INF;

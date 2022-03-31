@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CHECKERS_TABLE_HPP
+#define CHECKERS_TABLE_HPP
+
 #include <vector>
 #include "Vector.hpp"
 
@@ -26,8 +28,6 @@ private:
     std::vector<std::vector<int32_t>> table_{8, std::vector<int32_t>(8, Empty)};
     std::vector<Vector2D> moves_history_{};
 
-    static const std::vector<Vector2D> basic_steps;
-
 public:
     GameState(bool is_white, std::vector<std::vector<int32_t>> table, std::vector<Vector2D> moves):
             is_white_turn_(is_white), table_(std::move(table)), moves_history_(std::move(moves))
@@ -47,8 +47,11 @@ public:
 
     void InitBoard(); // заполняет доску шашками
     void SetPlayer(bool is_bot_white);
+    void ChangePlayer();
+    void clearMoves();
 
     void PrintBoard();
+    bool canKill(Vector2D cell);
 private:
     [[nodiscard]] bool isEnemyPawn(Vector2D cell) const;
     [[nodiscard]] bool isYourPawn(Vector2D cell) const;
@@ -71,6 +74,4 @@ private:
         // возвращает все возможные состояни игры из данной клетки
 };
 
-const std::vector<Vector2D> GameState::basic_steps = {
-        {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
-};
+#endif

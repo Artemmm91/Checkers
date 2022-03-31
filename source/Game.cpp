@@ -13,8 +13,19 @@
 std::string getNameCell(Vector2D cell) {
     std::string ans;
     ans += cell.x + 'a';
-    ans += cell.y + '0';
+    ans += (8 - cell.y) + '0';
     return ans;
+}
+
+Vector2D getCellName(std::string name) {
+    Vector2D cell;
+    cell.x = 8 - (name[1] - '0');
+    cell.y = name[0] - 'a';
+    if (!onBoard(cell)) {
+        std::cout << "Неправильный ход!!!\n";
+        return {-1, -1};
+    }
+    return cell;
 }
 
 Game::Game() {
@@ -49,16 +60,48 @@ void Game::End() {
         win_msg = "Вы победили! ";
     }
     std::cout << win_msg << " Спасибо за игру!";
-    sleep(1);
+    sleep(2);
 }
 
 void Game::PlayerTurn() {
-    std::cout << "Ваш ход!\n";
-    std::string
+    std::string player_turn;
+    std::cout << "Ваш ход!\nВведите клетку с которой будете ходить в формате <буква><цифра> например a3:\n";
+    std::cin >> player_turn;
+    auto cell = getCellName(player_turn);
+    if (cell == Vector2D{-1, -1}) {
+        return;
+    }
+    bool was_killed = false;
+    while(state_.canKill(cell)) {
+        was_killed = true;
+        std::cout << "Нужно бить! также введите клетку:\n";
+        std::cin >> player_turn;
+        auto land = getCellName(player_turn);
+        if (land == Vector2D{-1, -1}) {
+            return;
+        }
+        auto new_state = state_.makeMove(cell, land);
+        state_ = std::move(new_state);
+        cell = land;
+        state_.PrintBoard();
+    }
+    if (!was_killed) {
+        std::cout << "Некого бить, просто походите:\n";
+        std::cin >> player_turn;
+        auto land = getCellName(player_turn);
+        if (land == Vector2D{-1, -1}) {
+            return;
+        }
+        auto new_state = state_.makeMove(cell, land);
+        state_ = std::move(new_state);
+    }
+    std::cout << "Ход закончен!\n";
+    state_.ChangePlayer();
 }
 
 void Game::BotTurn() {
     std::cout << "Мой ход!\n";
+    sleep(1);
     auto moves = bot_.FindMove(state_);
     if (moves.size() < 2) {
         std::cout << "Что-то пошло не так!!!\n";
@@ -70,6 +113,7 @@ void Game::BotTurn() {
         state_ = std::move(new_state);
         state_.PrintBoard();
     }
+    state_.clearMoves();
     std::cout << "Ход закончен!\n";
 }
 

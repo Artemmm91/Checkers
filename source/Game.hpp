@@ -1,6 +1,8 @@
-#pragma once
+#ifndef CHECKERS_GAME_HPP
+#define CHECKERS_GAME_HPP
+
 #include "Table.hpp"
-#include "ABSearch.cpp"
+#include "ABSearch.hpp"
 
 class Game {
 private:
@@ -20,3 +22,5 @@ private:
     void MainGame();
 
 };
+
+#endif //CHECKERS_GAME_HPP

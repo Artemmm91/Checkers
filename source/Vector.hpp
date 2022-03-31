@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CHECKERS_VECTOR_HPP
+#define CHECKERS_VECTOR_HPP
 
 struct Vector2D {
 public:
@@ -21,3 +22,5 @@ Vector2D operator*(const Vector2D& v, int scalar);
 Vector2D operator*(int scalar, const Vector2D& v);
 Vector2D operator+(const Vector2D& v1, const Vector2D& v2);
 Vector2D operator-(const Vector2D& v1, const Vector2D& v2);
+
+#endif
