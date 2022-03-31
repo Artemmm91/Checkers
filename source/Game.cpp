@@ -114,6 +114,7 @@ void Game::BotTurn() {
         state_.PrintBoard();
     }
     state_.clearMoves();
+    state_.ChangePlayer();
     std::cout << "Ход закончен!\n";
 }
 
