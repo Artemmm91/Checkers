@@ -1,27 +1,23 @@
 # Checkers
-## Правила
+## Rules
 
-Русские шашки.
+Russian edition of checkers.
 
-Доска 8x8 - шашки стоят на черных клетках. Начинают белые.
+Board of size 8x8. 
 
-Пешки ходят вперед на одну. Могут бить назад.
+Full rules - https://en.wikipedia.org/wiki/Checkers
 
-Дамки ходят на сколько угоднго клеток.
+## Implementation
 
-Бить обязательно - можно любой вариант.
+Bot uses Alpha–beta pruning - optimization of min/max
 
-Во время боя пешка может стать дамкой и продолжить играть как дамка.
-
-## Реализация
-
-Для решения исопльзуется алгоритм A/B отсечения по состояниям доски.
-
-Максимальная глубина - это сложность бота - которую выставляет игрок.
+Player can choose difficulty from 1 to 10 - depth of a/b search.
 
 
 
-Чтобы запустить используйте стандартную сборку cmake:
+## Run
+
+To run projects simply run as usual project with cmake (cmake and make required)
 
 ```
 mkdir build
